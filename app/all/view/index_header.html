@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{$TITLE}</title>
+    <link rel="shortcut icon" href="{$ROOT}/img/favicon.ico?t=29.ico" type="image/x-icon" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript">
+        location.href="{$ROOT}/home/index/download";
+    </script>
+    <![endif]-->
+    <link href="{$ROOT}/widget/easyui/themes/default/easyui.css" rel="stylesheet" type="text/css"/>
+    <link href="{$ROOT}/widget/easyui/themes/icon.css" rel="stylesheet" type="text/css"  />
+    <script type="text/javascript" src="{$ROOT}/widget/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="{$ROOT}/js/jquery.fileDownload.min.js"></script>  <!--文件导出-->
+    <script type="text/javascript" src="{$ROOT}/widget/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="{$ROOT}/widget/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" type="text/css" href="{$ROOT}/css/common.css" />
+    <script type="text/javascript" src="{$ROOT}/js/common.js"></script>
+    <script type="text/javascript" src="{$ROOT}/js/easyui.extend.js"></script>
+    <script type="text/javascript" src="{$ROOT}/js/jquery.json.js"></script>
+
+    <script type="text/javascript">
+        var current_datagrid=null;
+        var cmenu_obj={};
+        cmenu_obj.cmenu=""; //标题行右键菜单
+        $(function() {
+            $(document).keydown(function (event) {
+                if (current_datagrid != null) { //如果正在编辑
+                    if (event.which == 9) {
+                        event.preventDefault();
+                        current_datagrid.datagrid('nextEditor');
+                    }
+                    else if (event.which == 13) {
+                        event.preventDefault();
+                        current_datagrid.datagrid('nextEditor', 'col');
+                    }
+                }
+            });
+        });
+    </script>
+</head>
