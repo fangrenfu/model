@@ -14,10 +14,10 @@ return [
     // 数据库类型
     'type'        => 'sqlsrv',
     // 服务器地址
-    'hostname'    => '127.0.0.1',
- //   'hostname'    => '172.18.0.41',
+ //   'hostname'    => '127.0.0.1',
+    'hostname'    => '172.18.0.41',
     // 数据库名
-    'database'    => 'jwgl0516',
+    'database'    => 'wxStudy',
     // 数据库用户名
     'username'    => 'sa',
     // 数据库密码
