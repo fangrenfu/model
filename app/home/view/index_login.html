@@ -1,4 +1,4 @@
-<layout name="layout" />
+<layout name="all@index/indexlayout" />
 <script type="text/javascript" src="{$ROOT}/js/md5.js"></script>
 <script>
         $(function () {
@@ -17,13 +17,13 @@
             pwd=hex_md5(hex_md5(pwd)+'{$GUID}');
             $.post('{$ROOT}/home/login/checklogin',{username:username,pwd:pwd},function(result){
                 if (result.status==1){
-                    location="{$ROOT}/admin/index/index";
+                    location="{$ROOT}/home/index/index";
                 }
                 else if(result.status==2){
                     location="{$ROOT}/teacher/";
                 }
                 else if(result.status==3){
-                    location="/student/index/index";
+                    location="/Student/Index/index";
                 }
                 else {
                     $.messager.alert("错误",result.info,"error",pwdselect);
@@ -119,6 +119,7 @@
             width: 100px;
         }
     </style>
+<body>
 <form action="" method="post" name="loginForm" id="loginForm">
     <div id="head"> </div>
     <div id="content">

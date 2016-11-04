@@ -19,6 +19,10 @@ use app\common\access\MyService;
 use think\Db;
 use think\Exception;
 
+/**专家评教得分
+ * Class QualityExpert
+ * @package app\common\service
+ */
 class QualityExpert extends MyService{
     /**获取某督导的具体打分情况
      * @param int $page
@@ -33,7 +37,7 @@ class QualityExpert extends MyService{
      */
     public function getList($page = 1, $rows = 20,$year,$term,$expert='%', $teacherno='%',$name='%',$school='')
     {
-        $result=null;
+        $result=['total'=>0,'rows'=>[]];
         $condition['year'] = $year;
         $condition['term'] = $term;
         if($expert!='%') $condition['qualityexpert.expert'] = array('like',$expert);

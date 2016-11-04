@@ -18,6 +18,10 @@ use app\common\access\MyService;
 use think\Db;
 use think\Exception;
 
+/**教室借用
+ * Class RoomReserve
+ * @package app\common\service
+ */
 class RoomReserve extends MyService{
 
     /**获取教室借用列表
@@ -31,7 +35,7 @@ class RoomReserve extends MyService{
      * @return array|null
      */
     public function getList($page=1,$rows=20,$year,$term,$roomno='%',$school='',$approved=''){
-        $result=null;
+        $result=['total'=>0,'rows'=>[]];
         $condition=null;
         $condition['roomreserve.year']=$year;
         $condition['roomreserve.term']=$term;
@@ -88,8 +92,7 @@ class RoomReserve extends MyService{
 
         if($this->checkRoomFree($roomno)) {
             //检查是否与教学安排冲突
-            $timeobj = new TimeSection();
-            $timebit = $timeobj->getTimeSectionItem($time)['timebits'];
+            $timebit = Item::getTimeSectionItem($time)['timebits'];
 
             $conflict = $this->checkCourseConflict($year, $term, $roomno, $day, $timebit, $weeks);
             if ($conflict) {
@@ -181,6 +184,11 @@ class RoomReserve extends MyService{
         return true;
     }
 
+    /**更新教室借用记录（删除，审批）
+     * @param $postData
+     * @return array
+     * @throws \Exception
+     */
     function update($postData){
         $updateRow=0;
         $deleteRow=0;

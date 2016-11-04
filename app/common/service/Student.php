@@ -12,11 +12,16 @@
 namespace app\common\service;
 
 
+use app\common\access\Item;
 use app\common\access\MyAccess;
 use app\common\access\MyException;
 use app\common\access\MyService;
 use think\Exception;
 
+/**学生信息
+ * Class Student
+ * @package app\common\service
+ */
 class Student extends MyService {
     /**获取学生基本数据信息
      * @param int $page
@@ -30,7 +35,7 @@ class Student extends MyService {
      * @return array|null
      */
     function getList($page=1,$rows=20,$studentno='%',$name='%',$classno='%',$school='',$status='',$free=''){
-        $result=null;
+        $result=['total'=>0,'rows'=>[]];
         $condition=null;
         if($studentno!='%') $condition['students.studentno']=array('like',$studentno);
         if($name!='%') $condition['students.name']=array('like',$name);
@@ -168,8 +173,7 @@ class Student extends MyService {
     function updateDetail($postData){
         $studentno=$postData['studentno'];
         $classno=$postData['classno'];
-        $obj=new Classes();
-        $school= $obj->getClassInfo($classno)['school'];
+        $school=Item::getClassItem($classno)['school'];
         if(MyAccess::checkStudentSchool($studentno)) {
             $this->query->startTrans(); //用事务保证两个表同时修改了。
             try {
@@ -230,8 +234,7 @@ class Student extends MyService {
     function addStudent($postData)
     {
         $classno = $postData['classno'];
-        $obj=new Classes();
-        $school= $obj->getClassInfo($classno)['school'];
+        $school=Item::getClassItem($classno)['school'];
         if (MyAccess::checkClassSchool($classno)) {
             $this->query->startTrans(); //用事务保证两个表同时修改了。
             try {
@@ -285,6 +288,11 @@ class Student extends MyService {
         return $result;
     }
 
+    /**更新锁定状态
+     * @param $postData
+     * @return array
+     * @throws \Exception
+     */
     function updateStatus($postData){
         $updateRow=0;
         //更新部分

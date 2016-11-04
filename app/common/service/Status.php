@@ -14,6 +14,10 @@ namespace app\common\service;
 
 use app\common\access\MyService;
 
+/**学籍
+ * Class Status
+ * @package app\common\service
+ */
 class Status extends MyService
 {
     /**读取学籍状态
@@ -23,7 +27,7 @@ class Status extends MyService
      */
     function getList($page = 1, $rows = 20)
     {
-        $result = null;
+        $result=['total'=>0,'rows'=>[]];
         $condition = null;
         $data = $this->query->table('statusoptions')->page($page, $rows)->field('name,rtrim(value) as value')->select();
         $count = $this->query->table('statusoptions')->count();
@@ -32,6 +36,11 @@ class Status extends MyService
         return $result;
     }
 
+    /**更新
+     * @param $postData
+     * @return array
+     * @throws \Exception
+     */
     public function  update($postData)
     {
         $updateRow = 0;

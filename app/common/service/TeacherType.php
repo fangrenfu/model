@@ -11,11 +11,20 @@ namespace app\common\service;
 
 use app\common\access\MyService;
 
+/**教师类型
+ * Class TeacherType
+ * @package app\common\service
+ */
 class TeacherType extends MyService
 {
+    /**获取
+     * @param int $page
+     * @param int $rows
+     * @return array|null
+     */
     function getList($page = 1, $rows = 20)
     {
-        $result = null;
+        $result=['total'=>0,'rows'=>[]];
         $condition = null;
         $data = $this->query->table('teachertype')->page($page, $rows)->field('name,rtrim(value) as value')->select();
         $count = $this->query->table('teachertype')->count();
@@ -24,6 +33,11 @@ class TeacherType extends MyService
         return $result;
     }
 
+    /**更新
+     * @param $postData
+     * @return array
+     * @throws \Exception
+     */
     public function  update($postData)
     {
         $updateRow = 0;

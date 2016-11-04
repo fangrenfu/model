@@ -17,6 +17,10 @@ use think\Exception;
 use think\Log;
 use think\Request;
 
+/**操作代码表
+ * Class Action
+ * @package app\common\service
+ */
 class Action extends MyService{
     /**判断该节点是否有子节点
      * @param $id
@@ -59,7 +63,7 @@ class Action extends MyService{
      * @return array
      */
     private function searchAction($action='%',$description='%',$searchId=''){
-        $result=array();
+        $result=['total'=>0,'rows'=>[]];
         $nodeArray=null;
         $idArray=null;
         $condition=null;

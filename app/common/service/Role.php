@@ -13,9 +13,18 @@ namespace app\common\service;
 
 use app\common\access\MyService;
 
+/**角色
+ * Class Role
+ * @package app\common\service
+ */
 class Role extends MyService{
-    public function getRoleList($page=1,$rows=1000){
-        $result=null;
+    /**获取角色列表
+     * @param int $page
+     * @param int $rows
+     * @return array|null
+     */
+    public function getList($page=1,$rows=1000){
+        $result=['total'=>0,'rows'=>[]];
         $data=$this->query->table('roles')->field("role,rtrim(description) as name,'' as checked")->page($page,$rows)->select();
         $count=$this->query->table('roles')->count();
         if(is_array($data)&&count($data)>0){ //小于0的话就不返回内容，防止IE下无法解析rows为NULL时的错误。
@@ -29,7 +38,7 @@ class Role extends MyService{
      * @return array
      * @throws \Exception
      */
-    public function  updateRole($postData){
+    public function  update($postData){
         $updateRow=0;
         $deleteRow=0;
         $insertRow=0;

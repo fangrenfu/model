@@ -17,6 +17,10 @@ use app\common\access\MyException;
 use app\common\access\MyService;
 use think\Exception;
 
+/**学籍异动
+ * Class Register
+ * @package app\common\service
+ */
 class Register extends MyService {
 
     /**获取学生学籍异动信息
@@ -31,7 +35,7 @@ class Register extends MyService {
      * @throws \think\Exception
      */
     function getList($page=1,$rows=20,$year='',$term='',$studentno='%',$name='%',$infotype=''){
-        $result=null;
+        $result=['total'=>0,'rows'=>[]];
         $condition=null;
         if($year==''||$term=='')
             throw new Exception('year or term is empty ', MyException::PARAM_NOT_CORRECT);

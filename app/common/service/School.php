@@ -14,14 +14,18 @@ namespace app\common\service;
 
 use app\common\access\MyService;
 
+/**学院信息
+ * Class School
+ * @package app\common\service
+ */
 class School extends MyService {
     /**获取学院列表
      * @param int $page
      * @param int $rows
      * @return array|null
      */
-    public function getSchoolList($page=1,$rows=20){
-        $result=null;
+    public function getList($page=1,$rows=20){
+        $result=['total'=>0,'rows'=>[]];
         $condition=null;
         $data=$this->query->table('schools')->field('school,rtrim(name) name,active,manage')->order('school')->page($page,$rows)->where($condition)->select();
         $count=$this->query->table('schools')->where($condition)->count();
@@ -36,7 +40,7 @@ class School extends MyService {
      * @return array
      * @throws \Exception
      */
-    public function  updateSchool($postData)
+    public function  update($postData)
     {
         $updateRow = 0;
         $deleteRow = 0;

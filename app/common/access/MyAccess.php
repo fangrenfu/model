@@ -246,7 +246,7 @@ class MyAccess {
             return false;
         }
     }
-
+    //检查课程所在学院是否有权限
     public static function checkCourseSchool($courseno=''){
         $condition=null;
         $condition['courseno']=$courseno;
@@ -261,7 +261,34 @@ class MyAccess {
             return false;
         }
     }
-
+    //检查开设专业权限
+    public static function checkMajorSchool($majorschool=''){
+        $condition=null;
+        $condition['majorschool']=$majorschool;
+        $data= Db::table('majors')->where($condition)->field('school')->select();
+        if(!is_array($data)||count($data)!=1)
+            throw new Exception('majorschool:'.$majorschool, MyException::PARAM_NOT_CORRECT);
+        if($data[0]['school']==session('S_USER_SCHOOL')||session('S_MANAGE')==1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public static function checkMajorPlanSchool($majorplanid=''){
+        $condition=null;
+        $condition['majorplan.rowid']=$majorplanid;
+        $data= Db::table('majors')->join('majorplan','majorplan.majorschool=majors.majorschool')->where($condition)->field('school')->select();
+        if(!is_array($data)||count($data)!=1)
+            throw new Exception('majorplanid:'.$majorplanid, MyException::PARAM_NOT_CORRECT);
+        if($data[0]['school']==session('S_USER_SCHOOL')||session('S_MANAGE')==1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    //检测教学计划的所属学院
     public static function checkProgramSchool($programno=''){
         $condition=null;
         $condition['programno']=$programno;
@@ -276,4 +303,5 @@ class MyAccess {
             return false;
         }
     }
+
 }

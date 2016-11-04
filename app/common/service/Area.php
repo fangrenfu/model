@@ -14,16 +14,20 @@ namespace app\common\service;
 
 use app\common\access\MyService;
 
+/**校区
+ * Class Area
+ * @package app\common\service
+ */
 class Area extends MyService{
 
 
-    /**
+    /**读取
      * @param int $page
      * @param int $rows
      * @return array|null
      */
     function getList($page=1,$rows=20){
-        $result=null;
+        $result=['total'=>0,'rows'=>[]];
         $condition=null;
         $data=$this->query->table('areas')->page($page,$rows)
             ->field('name,rtrim(value) value')->order('name')->select();
@@ -33,6 +37,11 @@ class Area extends MyService{
         return $result;
     }
 
+    /**更新
+     * @param $postData
+     * @return array
+     * @throws \Exception
+     */
     function update($postData){
         $updateRow=0;
         $deleteRow=0;

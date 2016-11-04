@@ -17,6 +17,10 @@ use app\common\access\MyException;
 use app\common\access\MyService;
 use think\Exception;
 
+/**注册信息
+ * Class Regdata
+ * @package app\common\service
+ */
 class Regdata extends MyService{
     /**
      * @param int $page 页码
@@ -34,7 +38,7 @@ class Regdata extends MyService{
         if($year==''||$term=='')
             throw new Exception('year or term is empty ',MyException::PARAM_NOT_CORRECT);
 
-        $result=null;
+        $result=['total'=>0,'rows'=>[]];
         $condition=null;
         $condition['students.classno']=array('like',$classno);
         $condition['students.studentno']=array('like',$studentno);

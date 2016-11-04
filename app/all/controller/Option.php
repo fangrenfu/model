@@ -21,6 +21,7 @@ use think\Log;
  * @package app\all\controller
  */
 class Option {
+    //角色
     public function role(){
         $result=null;
         try {
@@ -248,11 +249,7 @@ class Option {
         }
         return json($result);
     }
-
-    /**是否
-     * @param int $only
-     * @return \think\response\Json
-     */
+    //是否
     public function zo($only=1){
         $result=null;
         try {
@@ -267,11 +264,7 @@ class Option {
         }
         return json($result);
     }
-
-    /**读取一周第几天列表
-     * @param int $only
-     * @return \think\response\Json
-     */
+    //第几天
     public function  weekday($only=1){
         $result=null;
         try {
@@ -286,7 +279,7 @@ class Option {
         }
         return json($result);
     }
-
+    //单双周
     public function oew($only=1){
         $result=null;
         try {
@@ -301,6 +294,7 @@ class Option {
         }
         return json($result);
     }
+    //节次
     public function timesection($only=1){
         $result=null;
         try {
@@ -315,6 +309,7 @@ class Option {
         }
         return json($result);
     }
+    //专业方向
     public function majordirection($major=''){
         $result=null;
         try {
@@ -325,6 +320,7 @@ class Option {
         }
         return json($result);
     }
+    //课程类型
     public function coursetype(){
         $result=null;
         try {
@@ -334,7 +330,7 @@ class Option {
         }
         return json($result);
     }
-
+    //课程形式
     public function courseform(){
         $result=null;
         try {
@@ -344,31 +340,117 @@ class Option {
         }
         return json($result);
     }
-    public function test(){
-/*        $result =Db::table('users')->join('sessions','users.username=sessions.username')
-            ->field([
-                'convert(varchar(100),logintime,20)'=> 'logintime',
-                'convert(varchar(100),modifydate,20)'=>'modifydate',
-                ])
-            ->field('teacherno')->limit(1)->select();*/
-     //   $result =Db::query('select top 1 convert(varchar(100),logintime,20) logintime,convert(varchar(100),modifydate,20) modifydate from users LEFT JOIN sessions ON sessions.username=users.username ');
-      //  $result =Db::table('users')->field("isnull(username,0) mon,isnull(teacherno,0) tue,isnull(password,0) as t")->limit(1)->select();
-      //  $result =Db::table('sessions')->field("convert(varchar(100),logintime,20) as a,convert(varchar(100),modifydate,20) as b")->limit(1)->select();
-    //    $string="convert(varchar(100),logintime,20) as a,convert(varchar(100),modifydate,20) as b";
-        $start=microtime(true);
-        echo $start."<br/>";
-        $result="isnull(username,0) mon,isnull(teacherno,0) tue,isnull(password,0) as t";
-     //   $result="isnull(convert(varchar(100),logintime,20),0) as a,convert(varchar(100),modifydate,20) as b";
-        for($i=0;$i<10;$i++) {
-            for($j=0;$j<3;$j++){
-                $result="isnull(username,0) mon,isnull(teacherno,0) tue,isnull(password,0) as t";
-                $result = array_map('trim', explode(',', $result));
-                $result=preg_replace("/##/",',',$result);
-            }
+    //专业代码
+    public function majorcode(){
+        $result=null;
+        try {
+            $result =Db::table('majorcode')->field('rtrim(code) as code,rtrim(name) as name')->order('name')->select();
+        } catch (\Exception $e) {
+            MyAccess::throwException($e->getCode(),$e->getMessage());
         }
-       $end=microtime(true);
-        echo $end."<br/>";;
-        echo $end-$start;
+        return json($result);
+    }
+     //学科列表
+    public function branch(){
+        $result=null;
+        try {
+            $result =Db::table('branchcode')->field('rtrim(code) as code,rtrim(name) as name')->order('name')->select();
+        } catch (\Exception $e) {
+            MyAccess::throwException($e->getCode(),$e->getMessage());
+        }
+        return json($result);
+    }
+     //学位
+    public function degree(){
+        $result=null;
+        try {
+            $result =Db::table('degreeoptions')->field('rtrim(code) as code,rtrim(name) as name')->order('name')->select();
+        } catch (\Exception $e) {
+            MyAccess::throwException($e->getCode(),$e->getMessage());
+        }
+        return json($result);
+    }
+    //教学计划类型
+    public function programtype(){
+        $result=null;
+        try {
+            $result =Db::table('programtype')->field('rtrim(name) as type,rtrim(value) as name')->order('type')->select();
+        } catch (\Exception $e) {
+            MyAccess::throwException($e->getCode(),$e->getMessage());
+        }
+        return json($result);
+    }
+    //必修、模块、选修
+    public function courseapproach(){
+        $result=null;
+        try {
+            $result =Db::table('courseapproaches')->field('rtrim(name) as approach,rtrim(value) as name')->order('approach')->select();
+        } catch (\Exception $e) {
+            MyAccess::throwException($e->getCode(),$e->getMessage());
+        }
+        return json($result);
+    }
+    //考核方式 考试、考查、考核
+    public function examoption(){
+        $result=null;
+        try {
+            $result =Db::table('examoptions')->field('rtrim(name) as exam,rtrim(value) as name')->order('exam')->select();
+        } catch (\Exception $e) {
+            MyAccess::throwException($e->getCode(),$e->getMessage());
+        }
+        return json($result);
+    }
+    //考核方式 考试、考查、考核
+    public function coursecat(){
+        $result=null;
+        try {
+            $result =Db::table('coursecat')->field('rtrim(name) as category,rtrim(value) as name')->order('category')->select();
+        } catch (\Exception $e) {
+            MyAccess::throwException($e->getCode(),$e->getMessage());
+        }
+        return json($result);
+    }
+    //考试级别 国家统考，教师自考
+    public function testlevel(){
+        $result=null;
+        try {
+            $result =Db::table('testlevel')->field('rtrim(name) as level,rtrim(value) as name')->order('level')->select();
+        } catch (\Exception $e) {
+            MyAccess::throwException($e->getCode(),$e->getMessage());
+        }
+        return json($result);
+    }
+    //教学计划类型 全选全通过，部分选部分通过，全选部分通过，公共选修课
+    public function programform(){
+        $result=null;
+        try {
+            $result =Db::table('programform')->field('rtrim(name) as form,rtrim(value) as name')->order('form')->select();
+        } catch (\Exception $e) {
+            MyAccess::throwException($e->getCode(),$e->getMessage());
+        }
+        return json($result);
+    }
+    //毕业审核详细表中的课程未通过原因，为选修，
+    public function graduateform($only=1){
+        $result=null;
+        try {
+            $result =Db::table('graduateform')->field('rtrim(name) as form,rtrim(value) as name')->order('form')->select();
+            if($only==0) {
+                $all[] = array('form' => '', 'name' => '全部');
+                $result = array_merge($all, $result);
+            }
 
+        } catch (\Exception $e) {
+            MyAccess::throwException($e->getCode(),$e->getMessage());
+        }
+        return json($result);
+    }
+    /**
+     * 测试专用
+     */
+    public function test(){
+        $condition['courseno']='080A01A';
+        $result =Db::table('courses')->field('convert(varchar(10),khours) lhours')->where($condition)->select();
+        dump($result);
     }
 }

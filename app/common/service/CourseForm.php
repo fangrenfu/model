@@ -14,9 +14,18 @@ namespace app\common\service;
 
 use app\common\access\MyService;
 
+/**课程形式
+ * Class CourseForm
+ * @package app\common\service
+ */
 class CourseForm extends MyService{
+    /**读取
+     * @param int $page
+     * @param int $rows
+     * @return array|null
+     */
     public function getList($page=1,$rows=20){
-        $result=null;
+        $result=['total'=>0,'rows'=>[]];
         $condition=null;
         $data=$this->query->table('courseform')->page($page,$rows)
             ->field('name,rtrim(value) value')->order('name')->select();
@@ -26,6 +35,11 @@ class CourseForm extends MyService{
         return $result;
     }
 
+    /**更新
+     * @param $postData
+     * @return array
+     * @throws \Exception
+     */
     public function update($postData){
         $updateRow=0;
         $deleteRow=0;

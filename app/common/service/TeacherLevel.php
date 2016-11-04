@@ -11,9 +11,18 @@ namespace app\common\service;
 
 use app\common\access\MyService;
 
+/** 教师级别
+ * Class TeacherLevel
+ * @package app\common\service
+ */
 class TeacherLevel extends MyService {
+    /**获取
+     * @param int $page
+     * @param int $rows
+     * @return array|null
+     */
     function getList($page=1,$rows=20){
-        $result=null;
+        $result=['total'=>0,'rows'=>[]];
         $condition=null;
         $data=$this->query->table('teacherlevel')->page($page,$rows)->field('level,rtrim(name) as name')->select();
         $count= $this->query->table('teacherlevel')->count();
@@ -21,6 +30,12 @@ class TeacherLevel extends MyService {
             $result=array('total'=>$count,'rows'=>$data);
         return $result;
     }
+
+    /**更新
+     * @param $postData
+     * @return array
+     * @throws \Exception
+     */
     public function  update($postData){
         $updateRow=0;
         $deleteRow=0;

@@ -14,9 +14,21 @@ use app\common\access\MyException;
 use app\common\access\MyService;
 use think\Exception;
 
+/**课程
+ * Class Course
+ * @package app\common\service
+ */
 class Course  extends  MyService{
+    /**读取
+     * @param int $page
+     * @param int $rows
+     * @param string $courseno
+     * @param string $coursename
+     * @param string $school
+     * @return array|null
+     */
     function getList($page=1,$rows=20,$courseno='%',$coursename='%',$school=''){
-        $result=null;
+        $result=['total'=>0,'rows'=>[]];
         $condition=null;
         if($courseno!='%') $condition['courses.courseno']=array('like',$courseno);
         if($coursename!='%') $condition['courses.coursename']=array('like',$coursename);
@@ -26,9 +38,12 @@ class Course  extends  MyService{
             ->join('coursetypeoptions','coursetypeoptions.name=courses.type')
             ->join('courseform','courseform.name=courses.form','LEFT')
             ->page($page,$rows)
-            ->field('rtrim(courses.courseno) courseno,rtrim(courses.coursename) coursename,courses.total,credits,hours,
-            lhours,experiments,computing,khours,shours,zhours,week,rtrim(schools.name) schoolname,schools.school,
-            rtrim(coursetypeoptions.value) typename,courses.type,rtrim(courseform.value) formname,courses.form')
+            ->field('rtrim(courses.courseno) courseno,rtrim(courses.coursename) coursename,courses.total,
+            convert(varchar(10),credits) credits, convert(varchar(10),hours) hours,
+            convert(varchar(10),lhours) lhours,convert(varchar(10),experiments) experiments,
+            convert(varchar(10),computing) computing,convert(varchar(10),khours) khours,convert(varchar(10),shours) shours,
+            convert(varchar(10),zhours) zhours, convert(varchar(10),week) week,rtrim(schools.name) schoolname,schools.school,
+            rtrim(coursetypeoptions.value) typename,courses.type,rtrim(courseform.value) formname,courses.form,quarter,rtrim(rem) rem')
             ->where($condition)->order('courseno')->select();
         $count= $this->query->table('courses')->where($condition)->count();
         if(is_array($data)&&count($data)>0)
@@ -68,6 +83,8 @@ class Course  extends  MyService{
                     $data['type'] = $one->type;
                     $data['form'] = $one->form;
                     $data['type2'] = $one->form;
+                    $data['quarter'] = $one->quarter;
+                    $data['rem'] = $one->rem;
                     if ($data['school'] != session('S_USER_SCHOOL') && session('S_MANAGE') == 0) {
                         $info .= '无法为其它学院添加课程'.$one->coursename .'</br>';
                         $status=0;
@@ -102,6 +119,8 @@ class Course  extends  MyService{
                     $data['type'] = $one->type;
                     $data['form'] = $one->form;
                     $data['type2'] = $one->form;
+                    $data['quarter'] = $one->quarter;
+                    $data['rem'] = $one->rem;
                     if(MyAccess::checkCourseSchool($one->courseno))
                         $updateRow += $this->query->table('courses')->where($condition)->update($data);
                     else{

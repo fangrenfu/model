@@ -51,7 +51,7 @@ class Item {
         $result=null;
         $condition=null;
         $condition['courseno']=$courseno;
-        $data=Db::table('courses')->where($condition)->field('rtrim(coursename) as coursename,courseno')->select();
+        $data=Db::table('courses')->where($condition)->field('rtrim(coursename) as coursename,courseno,credits,hours')->select();
         if(!is_array($data)||count($data)!=1) {
             if($alert)
                 throw new Exception('courseno:' . $courseno, MyException::ITEM_NOT_EXISTS);
@@ -71,7 +71,7 @@ class Item {
         $result=null;
         $condition=null;
         $condition['programno']=$programno;
-        $data=Db::table('programs')->where($condition)->field('rtrim(progname) as progname')->select();
+        $data=Db::table('programs')->where($condition)->field('rtrim(progname) as progname,programno')->select();
         if(!is_array($data)||count($data)!=1) {
             if($alert)
                 throw new Exception('programno:' . $programno, MyException::ITEM_NOT_EXISTS);
@@ -139,7 +139,10 @@ class Item {
         $result=null;
         $condition=null;
         $condition['classno']=$classno;
-        $data=Db::table('classes')->where($condition)->field('rtrim(classname) as classname,classno,school')->select();
+        $data=Db::table('classes')
+            ->join('schools','schools.school=classes.school')
+            ->field('rtrim(classname) as classname,classno,schools.school,rtrim(schools.name) schoolname')
+            ->where($condition)->select();
         if(!is_array($data)||count($data)!=1) {
             if($alert)
                 throw new Exception('classno:' . $classno, MyException::ITEM_NOT_EXISTS);
@@ -148,4 +151,44 @@ class Item {
             $result=$data[0];
         return $result;
     }
-} 
+
+    /**获取单双周信息
+     * @param $oew
+     * @return mixed
+     * @throws Exception
+     */
+    public static  function getOEWItem($oew){
+        $condition['code']=$oew;
+        $result=Db::table('oewoptions')->field('rtrim(name) name,timebit,timebit2')->where($condition)->select();
+        if(!is_array($result)||count($result)!=1)
+            throw new Exception('oew'.$oew, MyException::ITEM_NOT_EXISTS);
+        return $result[0];
+    }
+
+    /**获取时间段信息
+     * @param $time
+     * @return mixed
+     * @throws Exception
+     */
+    public static function getTimeSectionItem($time)
+    {
+        $condition['name']=$time;
+        $result=Db::table('timesections')->field('rtrim(value) value,timebits,timebits2')->where($condition)->select();
+        if(!is_array($result)||count($result)!=1)
+            throw new Exception('time'.$time,  MyException::ITEM_NOT_EXISTS);
+        return $result[0];
+    }
+    //获取某个开设专业
+    public static function getMajorItem($majorschool)
+    {
+        $condition['majorschool']=$majorschool;
+        $result=Db::table('majors')->join('schools','schools.school=majors.school')
+            ->join('majorcode','majorcode.code=majors.majorno')
+            ->join('majordirection','majordirection.direction=majors.direction')
+            ->field('majors.majorschool,rtrim(schools.name) schoolname,majors.direction,rtrim(majordirection.name) directionname,
+            majors.majorno,rtrim(majorcode.name) majorname,majors.rowid')->where($condition)->select();
+        if(!is_array($result)||count($result)!=1)
+            throw new Exception('majorschool'.$majorschool,  MyException::ITEM_NOT_EXISTS);
+        return $result[0];
+    }
+}
