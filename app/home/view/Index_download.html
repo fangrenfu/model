@@ -3,10 +3,11 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>浏览器版本过低</title>
-    <script language="JavaScript" type="text/javascript">
-        if (navigator.userAgent.indexOf('MSIE') < 0) {
-            location.href="/";
-        }
+    <script type="text/javascript" src="{$ROOT}/js/browsercheck.js"></script>
+    <script type="text/javascript">
+        var browser=browsercheck();
+        if(browser.browser!="IE"||(browser.browser=="IE"&&parseInt(browser.version)>=9))
+            location.href="{$ROOT}/";
     </script>
 </head>
 <body>
