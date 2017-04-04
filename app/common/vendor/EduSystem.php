@@ -32,6 +32,7 @@ class EduSystem {
                 case 'cj':
 
                     return self::score($studentno);
+                //课表
                 case 'kb':
                     return self::table($studentno);
                 default:
