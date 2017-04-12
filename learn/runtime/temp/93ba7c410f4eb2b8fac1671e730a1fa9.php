@@ -1,0 +1,21 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:53:"G:\Git\model\web/../app/home\view\index_download.html";i:1478823988;}*/ ?>
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>浏览器版本过低</title>
+    <script type="text/javascript" src="<?php echo $ROOT; ?>/js/browsercheck.js"></script>
+    <script type="text/javascript">
+        var browser=browsercheck();
+        if(browser.browser!="IE"||(browser.browser=="IE"&&parseInt(browser.version)>=9))
+            location.href="<?php echo $ROOT; ?>/";
+    </script>
+</head>
+<body>
+您的浏览器是IE，且版本过低（IE9以下），请使用更高的版本。<br/>
+Windows XP 最高支持IE8，用户可以选择:<br/>
+<b>Chrome谷歌浏览器</b><a href="http://rj.baidu.com/soft/detail/14744.html">http://rj.baidu.com/soft/detail/14744.html</a> <br/>
+<b>Firefox火狐浏览器</b><a href="http://rj.baidu.com/soft/detail/11843.html">http://rj.baidu.com/soft/detail/11843.html</a> <br/>
+如果您确定您使用的是IE9以上版本浏览器，还是看到本界面，请确认使用非兼容模式访问本站。遨游浏览器应使用快速模式。
+</body>
+</html>
