@@ -1,0 +1,15 @@
+<layout name="layout"/>
+<div data-role="header">
+    <a data-icon="home" href="{$ROOT}/weixin/index/" data-role="button">首页</a>
+    <h1>{$course.name}</h1>
+    <a data-icon="grid" href="{$ROOT}/weixin/index/mycourse" data-role="button">我的课程</a>
+</div><!-- /header -->
+<div role="main" class="ui-content">
+<img src="{$ROOT}/cover/{$course.image}" width="100%" />
+    <div class="info">
+        课程介绍：{$course.rem}
+    </div>
+    <div class="videos">
+
+    </div>
+</div><!-- /content -->

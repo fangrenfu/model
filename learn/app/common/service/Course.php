@@ -18,7 +18,7 @@ use app\common\access\MyService;
  * Class Courses
  * @package app\common\service
  */
-class Courses extends MyService {
+class Course extends MyService {
     /**获取
      * @param int $page
      * @param int $rows

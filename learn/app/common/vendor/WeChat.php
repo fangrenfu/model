@@ -73,7 +73,7 @@ class WeChat {
                                 <PicUrl><![CDATA[%s]]></PicUrl>
                                 <Url><![CDATA[%s]]></Url>
                           </item>";
-                $newsStr =$newsStr.sprintf($newsTpl,trim($one['title']),trim($one['descrip']),trim($one['image']),trim($one['url']).'?openid='.$fromUsername);
+                $newsStr =$newsStr.sprintf($newsTpl,trim($one['title']),trim($one['descrip']),trim($one['image']),trim($one['url']).'&openid='.$fromUsername);
             }
             $newsStr =$newsStr."</Articles>";
             $messageTpl = "<xml>

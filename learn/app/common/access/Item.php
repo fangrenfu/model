@@ -32,7 +32,7 @@ class Item {
         $result=null;
         $condition=null;
         $condition['id']=$id;
-        $data=Db::table('courses')->where($condition)->field('rtrim(name) as name,id')->select();
+        $data=Db::table('course')->where($condition)->field('rtrim(name) as name,id,rtrim(rem) rem,image')->select();
         if(!is_array($data)||count($data)!=1) {
             if($alert)
                 throw new Exception('id:' . $id, MyException::ITEM_NOT_EXISTS);

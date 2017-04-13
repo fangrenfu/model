@@ -233,8 +233,8 @@ return [
     // +----------------------------------------------------------------------
     'token'=>'weixin123456',
     'site'=>[
-        'title'=>'宁波城市学院教务管理系统',
-        'copyright'=>'Copyright by keysoft corp. ©2016 软件开发：方仁富/88221932 版本号：201601010  最佳分辨率：1440*900'
+        'title'=>'宁波城市学院在线自主学习',
+        'copyright'=>'Copyright by keysoft corp. ©2016 keysoft'
     ],
     'auth' => true,//是否验证操作权限
     'log2db' => true, //操作日志是否记录到数据库

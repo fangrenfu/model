@@ -13,7 +13,7 @@ namespace app\admin\controller;
 
 use app\common\access\MyAccess;
 use app\common\access\MyController;
-use app\common\service\Courses;
+use app\common\service\Course;
 
 class Course extends MyController
 {
@@ -22,7 +22,7 @@ class Course extends MyController
     {
         $result = null;
         try {
-            $obj =  new Courses();
+            $obj =  new Course();
             $result = $obj->getList($page, $rows);
 
         } catch (\Exception $e) {
@@ -36,7 +36,7 @@ class Course extends MyController
     {
         $result = null;
         try {
-            $obj =  new Courses();
+            $obj =  new Course();
             $result = $obj->update($_POST);
 
         } catch (\Exception $e) {
