@@ -5,11 +5,19 @@
     <a data-icon="grid" href="{$ROOT}/weixin/index/mycourse" data-role="button">我的课程</a>
 </div><!-- /header -->
 <div role="main" class="ui-content">
-<img src="{$ROOT}/cover/{$course.image}" width="100%" />
+    <img src="{$ROOT}/cover/{$course.image}" width="100%" />
     <div class="info">
         课程介绍：{$course.rem}
     </div>
-    <div class="videos">
-
+    <div>
+        <ul data-role="listview" data-inset="true">
+        <foreach $video as $vo>
+<li><a href="{$vo.url}"><img src="{$ROOT}/cover/video.jpg"  class="ui-li-icon ui-corner-none">{$vo.name}</a></li>
+        </foreach>
+        </ul>
+    </div>
+    <div class="ui-grid-a">
+        <div class="ui-block-a"><a href="{$ACTION}{$course.lastpage}" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-arrow-l">上一页</a></div>
+        <div class="ui-block-b"><a href="{$ACTION}{$course.nextpage}" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-right ui-icon-arrow-r">下一页</a></div>
     </div>
 </div><!-- /content -->
