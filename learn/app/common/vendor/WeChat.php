@@ -33,12 +33,13 @@ class WeChat {
     }
 
     /**文本信息格式化
-     * @param $fromUsername string 发送者
-     * @param $toUsername string 接受人openid
-     * @param $contentStr string 内容
-     * @return string 格式化后文本
+     * @param $postObj
+     * @param $contentStr
+     * @return string
      */
-    public static  function textFormat($fromUsername,$toUsername,$contentStr){
+    public static  function textFormat($postObj,$contentStr){
+        $fromUsername = $postObj->FromUserName;
+        $toUsername = $postObj->ToUserName;
         $textTpl = "<xml>
                         <ToUserName><![CDATA[%s]]></ToUserName>
                         <FromUserName><![CDATA[%s]]></FromUserName>
@@ -53,12 +54,13 @@ class WeChat {
     }
 
     /**news图文信息格式化
-     * @param $fromUsername string 发送者
-     * @param $toUsername string 接受人openid
-     * @param $contentStr string 内容
-     * @return string 格式化后文本
+     * @param $postObj
+     * @param $data
+     * @return string
      */
-    public static  function newsFormat($fromUsername,$toUsername,$data){
+    public static  function newsFormat($postObj,$data){
+        $fromUsername = $postObj->FromUserName;
+        $toUsername = $postObj->ToUserName;
         $resultStr="";
         if(count($data)>0)
         {//查找相关关键字
