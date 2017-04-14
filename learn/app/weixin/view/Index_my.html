@@ -1,0 +1,25 @@
+<layout name="layout"/>
+<div data-role="header">
+    <a data-icon="home" href="{$ROOT}/weixin/index/index" data-role="button" data-ajax="false">首页</a>
+    <h1>我的课程</h1>
+
+</div><!-- /header -->
+<div role="main" class="ui-content">
+    <div>
+        <ul data-role="listview" data-inset="true">
+            <foreach $course as $vo>
+                <li>
+                    <a href="{$ROOT}/weixin/index/course?id={$vo.id}" data-ajax="false">
+                    <img src="{$ROOT}/cover/{$vo.id}_s.png">
+                    <h2>{$vo.name}</h2>
+                    <p>{$vo.rem}</p>
+                    </a>
+                </li>
+            </foreach>
+        </ul>
+    </div>
+    <div class="ui-grid-a" >
+        <div class="ui-block-a"><a href="{$ACTION}{$nav.lastpage}" data-ajax="false" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-arrow-l">上一页</a></div>
+        <div class="ui-block-b"><a href="{$ACTION}{$nav.nextpage}" data-ajax="false" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-right ui-icon-arrow-r">下一页</a></div>
+    </div>
+</div><!-- /content -->

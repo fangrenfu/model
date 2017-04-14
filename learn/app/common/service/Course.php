@@ -13,6 +13,7 @@ namespace app\common\service;
 
 
 use app\common\access\MyService;
+use think\Db;
 
 /**课程
  * Class Courses
@@ -27,14 +28,31 @@ class Course extends MyService {
     public function getList($page=1,$rows=20){
         $result=['total'=>0,'rows'=>[]];
         $condition=null;
-        $data=$this->query->table('courses')->field('id,rtrim(name) name,video,student,convert(varchar,date, 120) date')->order('name')->page($page,$rows)->where($condition)->select();
-        $count=$this->query->table('courses')->where($condition)->count();
+        $data=$this->query->table('course')->field('id,rtrim(name) name,video,student,convert(varchar,date, 120) date')->order('name')->page($page,$rows)->where($condition)->select();
+        $count=$this->query->table('course')->where($condition)->count();
         if(is_array($data)&&count($data)>0){ //小于0的话就不返回内容，防止IE下无法解析rows为NULL时的错误。
             $result=array('total'=>$count,'rows'=>$data);
         }
         return $result;
     }
+    public static function getView($page=1,$rows=5){
+        $data=Db::table('course')
+            ->field('id,name,rem')->order('name')->page($page,$rows)->select();
+        return $data;
+    }
 
+    public static function getMyView($page=1,$rows=5){
+        $condition=null;
+        if(session('openid')!=null){
+            $condition['learn.openid']=session('openid');
+        }
+        $data=Db::table('course')
+            ->join('learn','learn.courseid=course.id')
+            ->field('course.id,course.name,course.rem')
+            ->where($condition)
+            ->order('name')->page($page,$rows)->select();
+        return $data;
+    }
     /**更新课程信息
      * @param $postData
      * @return array

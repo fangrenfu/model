@@ -88,7 +88,8 @@ class Face {
     //获取最新视频
     private function getNewVideo($postObj){
         $data=Db::table('video')
-            ->join('course','course.id=video.courseid')->field("course.name+'-'+video.name title,'' descrip,'http://weixin.nbcc.cn/web/cover/'+course.image image,video.id url,video.date")
+            ->join('course','course.id=video.courseid')->field("course.name+'-'+video.name title,'' descrip,'http://weixin.nbcc.cn/web/cover/'+course.image image,
+            'http://weixin.nbcc.cn/web/weixin/index/video?id='+convert(varchar(20),video.id) url,video.date")
             ->order('date desc')->limit(8)->select();
         $result=WeChat::newsFormat($postObj,$data);
         return $result;
@@ -119,7 +120,8 @@ class Face {
         $condition['learn.openid']=$openid;
         $data=Db::table('course')
             ->join('learn','learn.courseid=course.id')
-            ->field("name+'-'+teacher title,rem descrip,'http://weixin.nbcc.cn/web/cover/'+image image,id url,learn.date")
+            ->field("name+'-'+teacher title,rem descrip,'http://weixin.nbcc.cn/web/cover/'+image image,
+        'http://weixin.nbcc.cn/web/weixin/index/course?id='+convert(varchar(20),id) url,learn.date")
             ->where($condition)
             ->order('date desc')->limit(8)->select();
         $result=WeChat::newsFormat($postObj,$data);

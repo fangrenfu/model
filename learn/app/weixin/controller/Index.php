@@ -15,6 +15,7 @@ namespace app\weixin\controller;
 
 
 use app\common\access\Item;
+use app\common\service\Course;
 use app\common\service\Video;
 use think\Controller;
 use think\Request;
@@ -37,9 +38,15 @@ class Index extends Controller {
     {
         return $this->fetch($name);
     }
-    public function index(){
-
-        echo session('openid');
+    public function index($page=1){
+        $course=Course::getView($page,5);
+        $lastpage=$page<=1?1:$page-1;
+        $nextpage=$page+1;
+        $nav['lastpage']='?page='.$lastpage;
+        $nav['nextpage']='?page='.$nextpage;
+        $this->assign("course", $course);
+        $this->assign("nav", $nav);
+        return $this->fetch();
     }
     //课程信息
     public function course($id,$page=1){
@@ -55,8 +62,14 @@ class Index extends Controller {
         return $this->fetch();
     }
     //我的课程
-    public function mycourse(){
-
+    public function my($page=1){
+        $course=Course::getMyView($page,5);
+        $lastpage=$page<=1?1:$page-1;
+        $nextpage=$page+1;
+        $nav['lastpage']='?page='.$lastpage;
+        $nav['nextpage']='?page='.$nextpage;
+        $this->assign("course", $course);
+        $this->assign("nav", $nav);
         return $this->fetch();
     }
     //视频播放

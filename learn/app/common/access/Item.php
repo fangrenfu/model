@@ -48,7 +48,7 @@ class Item {
         $condition['video.id']=$id;
         $data=Db::table('video')
             ->join('course','course.id=video.courseid')
-            ->where($condition)->field('video.id,video.courseid,course.name coursename,video.name')->select();
+            ->where($condition)->field('video.id,video.courseid,course.name coursename,video.name,path url')->select();
         if(!is_array($data)||count($data)!=1) {
             if($alert)
                 throw new Exception('id:' . $id, MyException::ITEM_NOT_EXISTS);
