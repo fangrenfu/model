@@ -42,7 +42,7 @@ class Index extends Controller {
         echo session('openid');
     }
     //课程信息
-    public function course($id=0,$page=1){
+    public function course($id,$page=1){
         $course=Item::getCourseItem($id);
         $video=Video::getView($page,10,$id);
 
@@ -60,8 +60,13 @@ class Index extends Controller {
         return $this->fetch();
     }
     //视频播放
-    public function play($id){
-
+    public function video($id){
+        $video=Item::getVideoItem($id);
+        $lastvideo=Video::getLastVideo($id);
+        $nextvideo=Video::getNextVideo($id);
+        $this->assign("video", $video);
+        $this->assign("lastvideo", $lastvideo);
+        $this->assign("nextvideo", $nextvideo);
         return $this->fetch();
     }
     public function test($id=0){

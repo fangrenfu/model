@@ -32,7 +32,23 @@ class Item {
         $result=null;
         $condition=null;
         $condition['id']=$id;
-        $data=Db::table('course')->where($condition)->field('rtrim(name) as name,id,rtrim(rem) rem,image')->select();
+        $data=Db::table('course')->where($condition)->field('rtrim(name) as name,id,rtrim(rem) rem,image,teacher')->select();
+        if(!is_array($data)||count($data)!=1) {
+            if($alert)
+                throw new Exception('id:' . $id, MyException::ITEM_NOT_EXISTS);
+        }
+        else
+            $result=$data[0];
+        return $result;
+    }
+    //根据id获取视频基本信息
+    public static function getVideoItem($id,$alert=true){
+        $result=null;
+        $condition=null;
+        $condition['video.id']=$id;
+        $data=Db::table('video')
+            ->join('course','course.id=video.courseid')
+            ->where($condition)->field('video.id,video.courseid,course.name coursename,video.name')->select();
         if(!is_array($data)||count($data)!=1) {
             if($alert)
                 throw new Exception('id:' . $id, MyException::ITEM_NOT_EXISTS);

@@ -1,0 +1,16 @@
+<layout name="layout"/>
+<div data-role="header">
+    <a data-icon="home" href="{$ROOT}/weixin/index/course?id={$video.courseid}" data-role="button" data-ajax="false">课程首页</a>
+    <h1>{$video.coursename}</h1>
+    <a data-icon="grid" href="{$ROOT}/weixin/index/mycourse" data-role="button">我的课程</a>
+</div><!-- /header -->
+<div role="main" class="ui-content">
+    <video src="{$ROOT}/video/demo.mp4"  controls="controls" autoplay="autoplay" width="100%">您的浏览器不支持此种视频格式。</video>
+    <div class="info">
+        当前播放：{$video.name}
+    </div>
+    <div class="ui-grid-a" >
+        <div class="ui-block-a"><a href="{$ACTION}?id={$lastvideo.id}" data-ajax="false" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-arrow-l">{$lastvideo.name}</a></div>
+        <div class="ui-block-b"><a href="{$ACTION}?id={$nextvideo.id}" data-ajax="false" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-right ui-icon-arrow-r">{$nextvideo.name}</a></div>
+    </div>
+</div><!-- /content -->
