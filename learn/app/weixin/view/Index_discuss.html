@@ -1,0 +1,27 @@
+<layout name="layout"/>
+<div data-role="header">
+    <a data-icon="home" href="{$ROOT}/weixin/index/" data-ajax="false" data-role="button">首页</a>
+    <h1>{$discuss.videoname}的讨论</h1>
+    <a data-icon="video" href="{$ROOT}/weixin/index/video?id={$discuss.videoid}"   data-ajax="false" data-role="button">观看视频</a>
+</div><!-- /header -->
+<div role="main" class="ui-content">
+    <div>
+        <ul data-role="listview" data-inset="true">
+            <li data-role="list-divider">{$discuss.title}</li>
+            <li>
+                <p><strong>{$discuss.author}</strong></p>
+                <p  style="white-space:pre-wrap;">{$discuss.content}</p>
+                <p class="ui-li-aside"><strong>{$discuss.date}</strong></p>
+            </li>
+            <foreach $discussdetail as $vo>
+                <li><p><strong>{$vo.author}</strong></p><p  style="white-space:pre-wrap;">{$vo.content}</p><p class="ui-li-aside"><strong>{$vo.date}</strong></p></li>
+            </foreach>
+        </ul>
+    </div>
+    <div class="ui-grid-b" >
+        <div class="ui-block-a"><a href="{$ACTION}?id={$discuss.id}&page={$nav.lastpage}" data-ajax="false" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-arrow-l">上页</a></div>
+        <div class="ui-block-b"><a href="#" data-ajax="false" class="ui-shadow ui-btn ui-corner-all">第{$nav.page}页</a></div>
+        <div class="ui-block-c"><a href="{$ACTION}?id={$discuss.id}&page={$nav.nextpage}" data-ajax="false" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-right ui-icon-arrow-r">下页</a></div>
+    </div>
+
+</div><!-- /content -->

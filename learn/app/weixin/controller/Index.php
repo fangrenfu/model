@@ -16,6 +16,8 @@ namespace app\weixin\controller;
 
 use app\common\access\Item;
 use app\common\service\Course;
+use app\common\service\Discuss;
+use app\common\service\DiscussDetail;
 use app\common\service\Video;
 use think\Controller;
 use think\Request;
@@ -77,9 +79,25 @@ class Index extends Controller {
         $video=Item::getVideoItem($id);
         $lastvideo=Video::getLastVideo($id);
         $nextvideo=Video::getNextVideo($id);
+        $discuss=Discuss::getView(1,5,$id);
         $this->assign("video", $video);
         $this->assign("lastvideo", $lastvideo);
         $this->assign("nextvideo", $nextvideo);
+        $this->assign("discuss", $discuss);
+        return $this->fetch();
+    }
+    //讨论内容
+    public function discuss($id,$page=1){
+        $lastpage=$page<=1?1:$page-1;
+        $nextpage=$page+1;
+        $nav['lastpage']=$lastpage;
+        $nav['nextpage']=$nextpage;
+        $nav['page']=$page;
+        $discuss=Item::getDiscussItem($id);
+        $discussdetail=DiscussDetail::getView($page,5,$id);
+        $this->assign("discuss", $discuss);
+        $this->assign("discussdetail", $discussdetail);
+        $this->assign("nav", $nav);
         return $this->fetch();
     }
     public function test($id=0){

@@ -57,4 +57,21 @@ class Item {
             $result=$data[0];
         return $result;
     }
+    //根据id获取讨论的基本信息
+    public static function getDiscussItem($id,$alert=true){
+        $result=null;
+        $condition=null;
+        $condition['discuss.id']=$id;
+        $data=Db::table('discuss')
+            ->join('video','video.id=discuss.map')
+            ->join('student','student.openid=discuss.openid')
+            ->where($condition)->field('discuss.id,video.id videoid,video.name videoname,discuss.content,CONVERT(varchar(100),discuss.date, 120) date,discuss.title,student.name author')->select();
+        if(!is_array($data)||count($data)!=1) {
+            if($alert)
+                throw new Exception('id:' . $id, MyException::ITEM_NOT_EXISTS);
+        }
+        else
+            $result=$data[0];
+        return $result;
+    }
 }
