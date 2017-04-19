@@ -76,6 +76,12 @@ class Face {
             case 'V2_2'://我的课程
                 $msg=$this->getMyCourse($postObj);
                 break;
+            case 'V3_1'://我的问题
+                $msg=$this->getMyDiscuss($postObj);
+                break;
+            case 'V3_2'://我的参与
+                $msg=$this->getMyAttend($postObj);
+                break;
             default:
                 $msg='菜单未定义！';
                 $msg=WeChat::textFormat($postObj,$msg);
@@ -127,5 +133,31 @@ class Face {
         $result=WeChat::newsFormat($postObj,$data);
         return $result;
     }
+    // $newsStr =$newsStr.sprintf($newsTpl,trim($one['title']),trim($one['descrip']),trim($one['image']),trim($one['url']).'?openid='.$fromUsername);
+    private function getMyDiscuss($postObj){
+        $condition=null;
+        $openid=$postObj->FromUserName.'';
+        $condition['openid']=$openid;
+        $data=Db::table('discuss')
+            ->field("title,content descrip,'http://weixin.nbcc.cn/web/cover/topic.jpg' image,
+        'http://weixin.nbcc.cn/web/weixin/index/discuss?id='+convert(varchar(20),id) url,date")
+            ->where($condition)
+            ->order('date desc')->limit(8)->select();
+        $result=WeChat::newsFormat($postObj,$data);
+        return $result;
+    }
 
+    private function getMyAttend($postObj){
+        $condition=null;
+        $openid=$postObj->FromUserName.'';
+        $condition['discussdetail.openid']=$openid;
+        $data=Db::table('discussdetail')
+            ->join('discuss','discuss.id=discussdetail.map')
+            ->field("discuss.title,discuss.content descrip,'http://weixin.nbcc.cn/web/cover/topic.jpg' image,
+        'http://weixin.nbcc.cn/web/weixin/index/discuss?id='+convert(varchar(20),discuss.id) url,discussdetail.date")
+            ->where($condition)
+            ->order('date desc')->limit(8)->select();
+        $result=WeChat::newsFormat($postObj,$data);
+        return $result;
+    }
 }

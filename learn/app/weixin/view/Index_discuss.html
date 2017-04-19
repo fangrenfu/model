@@ -1,4 +1,21 @@
 <layout name="layout"/>
+<script type="text/javascript">
+    $(function(){
+        $("#submit").click(function() {
+            var effectRow={};
+            effectRow['content']=$('#content').val();
+            effectRow['map']='{$discuss.id}';
+            $.post('{$ROOT}/weixin/action/add',effectRow,function(result){
+                if (result.status==1){
+                    alert('成功');
+                    document.location.reload();
+                } else {
+                    alert('错误');
+                }
+            },'json');
+        });
+    });
+</script>
 <div data-role="header">
     <a data-icon="home" href="{$ROOT}/weixin/index/" data-ajax="false" data-role="button">首页</a>
     <h1>{$discuss.videoname}的讨论</h1>
@@ -23,5 +40,7 @@
         <div class="ui-block-b"><a href="#" data-ajax="false" class="ui-shadow ui-btn ui-corner-all">第{$nav.page}页</a></div>
         <div class="ui-block-c"><a href="{$ACTION}?id={$discuss.id}&page={$nav.nextpage}" data-ajax="false" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-right ui-icon-arrow-r">下页</a></div>
     </div>
-
+    <label for="content" class="ui-hidden-accessible">跟帖</label>
+    <textarea cols="40" rows="8" name="content" id="content"  placeholder="跟帖内容" value=""></textarea>
+    <input type="button" id="submit" value="跟帖回复" data-icon="plus" data-theme="c">
 </div><!-- /content -->

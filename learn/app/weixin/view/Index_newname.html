@@ -1,0 +1,26 @@
+<layout name="layout"/>
+<script type="text/javascript">
+    $(function(){
+        $("#submit").click(function() {
+            var effectRow={};
+            effectRow['name']=$('#name').val();
+            $.post('{$ROOT}/weixin/action/save',effectRow,function(result){
+                if (result.status==1){
+                    alert('成功');
+                    document.location.reload();
+                } else {
+                    alert('错误');
+                }
+            },'json');
+        });
+    });
+</script>
+<div data-role="header">
+    <a data-icon="home" href="{$ROOT}/weixin/index/" data-ajax="false" data-role="button">首页</a>
+    <h1>设置论坛昵称</h1>
+</div><!-- /header -->
+<div role="main" class="ui-content">
+    <label for="name" class="ui-hidden-accessible">标题</label>
+    <input type="text" name="content" id="name"  placeholder="昵称" value="">
+    <input type="button" id="submit" value="保存" data-icon="check" data-theme="c">
+</div><!-- /content -->

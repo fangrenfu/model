@@ -27,4 +27,12 @@ class Discuss extends MyAccess {
             ->select();
         return $result;
     }
+    public static function  add($postData){
+        $data['map']=$postData['map'];
+        $data['title']=$postData['title'];
+        $data['content']=$postData['content'];
+        $data['openid']=session('openid');
+        Db::table('discuss')->insert($data);
+        return   $result=array('info'=>'成功','status'=>'1');
+    }
 }

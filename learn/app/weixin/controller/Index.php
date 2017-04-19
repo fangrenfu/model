@@ -18,6 +18,8 @@ use app\common\access\Item;
 use app\common\service\Course;
 use app\common\service\Discuss;
 use app\common\service\DiscussDetail;
+use app\common\service\Learn;
+use app\common\service\Student;
 use app\common\service\Video;
 use think\Controller;
 use think\Request;
@@ -27,12 +29,13 @@ class Index extends Controller {
 
         $request = Request::instance();
         $openid= $request->param('openid');
-        session('openid',$openid);
+        if($openid!='') {
+            session('openid', $openid);
+        }
         $root=$request->root();
         $action=$root.'/'.$request->module().'/'.$request->controller().'/'.$request->action();
         $this->assign("ROOT", $root);
         $this->assign("ACTION",strtolower($action));
-
         $this->assign("TITLE",config('site.title'));
         $this->assign("COPYRIGHT",config('site.copyright'));
     }
@@ -75,19 +78,30 @@ class Index extends Controller {
         return $this->fetch();
     }
     //视频播放
-    public function video($id){
+    public function video($id,$page=1){
+        Learn::learn($id); //加入学习列表
         $video=Item::getVideoItem($id);
         $lastvideo=Video::getLastVideo($id);
         $nextvideo=Video::getNextVideo($id);
-        $discuss=Discuss::getView(1,5,$id);
+        $discuss=Discuss::getView($page,5,$id);
         $this->assign("video", $video);
         $this->assign("lastvideo", $lastvideo);
         $this->assign("nextvideo", $nextvideo);
         $this->assign("discuss", $discuss);
+        $lastpage=$page<=1?1:$page-1;
+        $nextpage=$page+1;
+        $nav['lastpage']=$lastpage;
+        $nav['nextpage']=$nextpage;
+        $nav['page']=$page;
+        $this->assign("nav", $nav);
         return $this->fetch();
     }
     //讨论内容
     public function discuss($id,$page=1){
+        //检查是否有昵称，没有设置的话，开始设置昵称。
+        $openid=session('openid');
+        if(Student::getName($openid)=='')
+            return $this->fetch('newname');
         $lastpage=$page<=1?1:$page-1;
         $nextpage=$page+1;
         $nav['lastpage']=$lastpage;
@@ -98,6 +112,11 @@ class Index extends Controller {
         $this->assign("discuss", $discuss);
         $this->assign("discussdetail", $discussdetail);
         $this->assign("nav", $nav);
+        return $this->fetch();
+    }
+    public function newdiscuss($id){
+        $discuss=Item::getDiscussItem($id);
+        $this->assign("discuss", $discuss);
         return $this->fetch();
     }
     public function test($id=0){

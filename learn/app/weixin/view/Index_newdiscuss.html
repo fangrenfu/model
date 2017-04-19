@@ -1,0 +1,31 @@
+<layout name="layout"/>
+<script type="text/javascript">
+    $(function(){
+        $("#submit").click(function() {
+            var effectRow={};
+            effectRow['title']=$('#title').val();
+            effectRow['content']=$('#content').val();
+            effectRow['map']='{$discuss.id}';
+            $.post('{$ROOT}/weixin/action/newdiscuss',effectRow,function(result){
+                if (result.status==1){
+                    alert('成功');
+                    document.location.href="{$ROOT}/weixin/index/video?id={$discuss.videoid}";
+                } else {
+                    alert('错误');
+                }
+            },'json');
+        });
+    });
+</script>
+<div data-role="header">
+    <a data-icon="home" href="{$ROOT}/weixin/index/" data-ajax="false" data-role="button">首页</a>
+    <h1>{$discuss.videoname}的讨论</h1>
+    <a data-icon="video" href="{$ROOT}/weixin/index/video?id={$discuss.videoid}"   data-ajax="false" data-role="button">观看视频</a>
+</div><!-- /header -->
+<div role="main" class="ui-content">
+    <label for="title" class="ui-hidden-accessible">标题</label>
+    <input type="text" name="content" id="title"  placeholder="标题" value="">
+    <label for="content" class="ui-hidden-accessible">内容</label>
+    <textarea cols="40" rows="8" name="content" id="content"  placeholder="内容" value=""></textarea>
+    <input type="button" id="submit" value="发布新贴" data-icon="plus" data-theme="c">
+</div><!-- /content -->

@@ -2,7 +2,7 @@
 <div data-role="header">
     <a data-icon="home" href="{$ROOT}/weixin/index/course?id={$video.courseid}" data-role="button" data-ajax="false">课程首页</a>
     <h1>{$video.coursename}</h1>
-    <a data-icon="comment" href="{$ROOT}/weixin/index/discuss" data-role="button">发起讨论</a>
+    <a data-icon="comment" href="{$ROOT}/weixin/index/newdiscuss?id={$video.id}" data-role="button"  data-ajax="false">发起讨论</a>
 </div><!-- /header -->
 <div role="main" class="ui-content">
     <video src="{$ROOT}/video{$video.url}"  controls="controls" autoplay="autoplay" width="100%">您的浏览器不支持此种视频格式。</video>
@@ -20,5 +20,10 @@
                 <li><a href="{$ROOT}/weixin/index/discuss?id={$vo.id}" data-ajax="false">{$vo.name}<img src="{$ROOT}/cover/topic.jpg"  class="ui-li-icon ui-corner-none"></a></li>
             </foreach>
         </ul>
+    </div>
+    <div class="ui-grid-b" >
+        <div class="ui-block-a"><a href="{$ACTION}?id={$video.id}&page={$nav.lastpage}" data-ajax="false" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-arrow-l">上页</a></div>
+        <div class="ui-block-b"><a href="#" data-ajax="false" class="ui-shadow ui-btn ui-corner-all">第{$nav.page}页</a></div>
+        <div class="ui-block-c"><a href="{$ACTION}?id={$video.id}&page={$nav.nextpage}" data-ajax="false" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-right ui-icon-arrow-r">下页</a></div>
     </div>
 </div><!-- /content -->
