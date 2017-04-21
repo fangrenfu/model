@@ -94,8 +94,8 @@ class Face {
     //获取最新视频
     private function getNewVideo($postObj){
         $data=Db::table('video')
-            ->join('course','course.id=video.courseid')->field("course.name+'-'+video.name title,'' descrip,'http://weixin.nbcc.cn/web/cover/'+course.image image,
-            'http://weixin.nbcc.cn/web/weixin/index/video?id='+convert(varchar(20),video.id) url,video.date")
+            ->join('course','course.id=video.courseid')->field("course.name+'-'+video.name title,'' descrip,'http://weixin.nbcc.cn/learn/cover/'+course.image image,
+            'http://weixin.nbcc.cn/learn/weixin/index/video?id='+convert(varchar(20),video.id) url,video.date")
             ->order('date desc')->limit(8)->select();
         $result=WeChat::newsFormat($postObj,$data);
         return $result;
@@ -103,8 +103,8 @@ class Face {
 //    获取最新课程
 // $newsStr =$newsStr.sprintf($newsTpl,trim($one['title']),trim($one['descrip']),trim($one['image']),trim($one['url']).'?openid='.$fromUsername);
     private function getNewCourse($postObj){
-        $data=Db::table('course')->field("name+'-'+teacher title,rem descrip,'http://weixin.nbcc.cn/web/cover/'+image image,
-         'http://weixin.nbcc.cn/web/weixin/index/course?id='+convert(varchar(20),id) url,date")
+        $data=Db::table('course')->field("name+'-'+teacher title,rem descrip,'http://weixin.nbcc.cn/learn/cover/'+image image,
+         'http://weixin.nbcc.cn/learn/weixin/index/course?id='+convert(varchar(20),id) url,date")
             ->order('date desc')->limit(4)->select();
         $result=WeChat::newsFormat($postObj,$data);
         return $result;
@@ -113,8 +113,8 @@ class Face {
     // $newsStr =$newsStr.sprintf($newsTpl,trim($one['title']),trim($one['descrip']),trim($one['image']),trim($one['url']).'?openid='.$fromUsername);
     private function getAllCourse($postObj){
 
-        $data=Db::table('course')->field("name+'-'+teacher title,rem descrip,'http://weixin.nbcc.cn/web/cover/'+image image,
-        'http://weixin.nbcc.cn/web/weixin/index/course?id='+convert(varchar(20),id) url,date")
+        $data=Db::table('course')->field("name+'-'+teacher title,rem descrip,'http://weixin.nbcc.cn/learn/cover/'+image image,
+        'http://weixin.nbcc.cn/learn/weixin/index/course?id='+convert(varchar(20),id) url,date")
             ->order('date desc')->limit(8)->select();
         $result=WeChat::newsFormat($postObj,$data);
         return $result;
@@ -126,8 +126,8 @@ class Face {
         $condition['learn.openid']=$openid;
         $data=Db::table('course')
             ->join('learn','learn.courseid=course.id')
-            ->field("name+'-'+teacher title,rem descrip,'http://weixin.nbcc.cn/web/cover/'+image image,
-        'http://weixin.nbcc.cn/web/weixin/index/course?id='+convert(varchar(20),id) url,learn.date")
+            ->field("name+'-'+teacher title,rem descrip,'http://weixin.nbcc.cn/learn/cover/'+image image,
+        'http://weixin.nbcc.cn/learn/weixin/index/course?id='+convert(varchar(20),id) url,learn.date")
             ->where($condition)
             ->order('date desc')->limit(8)->select();
         $result=WeChat::newsFormat($postObj,$data);
@@ -139,8 +139,8 @@ class Face {
         $openid=$postObj->FromUserName.'';
         $condition['openid']=$openid;
         $data=Db::table('discuss')
-            ->field("title,content descrip,'http://weixin.nbcc.cn/web/cover/topic.jpg' image,
-        'http://weixin.nbcc.cn/web/weixin/index/discuss?id='+convert(varchar(20),id) url,date")
+            ->field("title,content descrip,'http://weixin.nbcc.cn/learn/cover/topic.jpg' image,
+        'http://weixin.nbcc.cn/learn/weixin/index/discuss?id='+convert(varchar(20),id) url,date")
             ->where($condition)
             ->order('date desc')->limit(8)->select();
         $result=WeChat::newsFormat($postObj,$data);
@@ -153,8 +153,8 @@ class Face {
         $condition['discussdetail.openid']=$openid;
         $data=Db::table('discussdetail')
             ->join('discuss','discuss.id=discussdetail.map')
-            ->field("discuss.title,discuss.content descrip,'http://weixin.nbcc.cn/web/cover/topic.jpg' image,
-        'http://weixin.nbcc.cn/web/weixin/index/discuss?id='+convert(varchar(20),discuss.id) url,discussdetail.date")
+            ->field("discuss.title,discuss.content descrip,'http://weixin.nbcc.cn/learn/cover/topic.jpg' image,
+        'http://weixin.nbcc.cn/learn/weixin/index/discuss?id='+convert(varchar(20),discuss.id) url,discussdetail.date")
             ->where($condition)
             ->order('date desc')->limit(8)->select();
         $result=WeChat::newsFormat($postObj,$data);

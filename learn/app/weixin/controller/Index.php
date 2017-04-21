@@ -115,8 +115,8 @@ class Index extends Controller {
         return $this->fetch();
     }
     public function newdiscuss($id){
-        $discuss=Item::getDiscussItem($id);
-        $this->assign("discuss", $discuss);
+        $discuss=Item::getVideoItem($id);
+        $this->assign("video", $discuss);
         return $this->fetch();
     }
     public function test($id=0){

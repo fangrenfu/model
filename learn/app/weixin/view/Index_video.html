@@ -5,7 +5,7 @@
     <a data-icon="comment" href="{$ROOT}/weixin/index/newdiscuss?id={$video.id}" data-role="button"  data-ajax="false">发起讨论</a>
 </div><!-- /header -->
 <div role="main" class="ui-content">
-    <video src="{$ROOT}/video{$video.url}"  controls="controls" autoplay="autoplay" width="100%">您的浏览器不支持此种视频格式。</video>
+    <video src="{$ROOT}/video/{$video.courseid}/{$video.url}"  controls="controls" autoplay="autoplay" width="100%">您的浏览器不支持此种视频格式。</video>
     <div class="info">
         当前播放：{$video.name}
     </div>
